@@ -1,7 +1,7 @@
 /*
 [task_local]
 # 连续签到
-7 7 7 7 7  t_countinue_sign.js, tag=连续签到, enabled=true
+7 7 7 7 7  countinue_sign.js, tag=连续签到, enabled=true
  */
 const $ = new Env('连续签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
