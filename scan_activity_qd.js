@@ -1,7 +1,7 @@
 /*
 [task_local]
 # 签到活動扫描
-cron: 30 8-23/2 * * *  
+cron: 5 8-23/2 * * *  
 t_scan_sign_activity.js, tag=签到活動扫描, enabled=true
  */
 const $ = new Env('签到活动扫描');
@@ -119,10 +119,10 @@ async function jdmodule() {
         await $.wait(parseInt(Math.random() * 50000 + 1000, 10))
     }
     if ($.signChange) {
-        await notify.sendNotify()
+        await notify.sendNotify(`检测到七日签到变量变动`, `export RECORD_SIGN=\"${$.recordSign}\"`)
     }
     if ($.conSignChange) {
-        await notify.sendNotify()
+        await notify.sendNotify(`检测到连续签到变量变动`, `export RECORD_CON_SIGN=\"${$.recordConSign}\"`)
     }
 }
 
@@ -133,7 +133,7 @@ function dealExportByUrl(url, id) {
         if ($.recordSign.indexOf(id) == -1) {
             $.signChange = true
             $.recordSign += `&${id}`
-            return `export kdy_qd_custom=\"${id}\"`
+            return `export T_SEVENDAY_SIGN_ID=\"${id}\"`
         }
     }
 
@@ -141,10 +141,10 @@ function dealExportByUrl(url, id) {
     // https://cjhy-isv.isvjcloud.com/sign/sevenDay/signActivity?activityId=
     if (url.indexOf("sevenDay") != -1 && url.indexOf("cjhy") != -1) {
         if ($.recordSign.indexOf(id) == -1) {
-            id = id
+            id = 'cj_' + id
             $.signChange = true
             $.recordSign += `&${id}`
-            return `export kdy_qd_custom=\"${id}\"`
+            return `export T_SEVENDAY_SIGN_ID=\"${id}\"`
         }
 
     }
@@ -155,7 +155,7 @@ function dealExportByUrl(url, id) {
         if ($.recordConSign.indexOf(id) == -1) {
             $.conSignChange = true
             $.recordConSign += `&${id}`
-            return `export kdy_qd_custom=\"${id}\"`
+            return `export T_CON_SIGN_ID=\"${id}\"`
         }
     }
 
@@ -163,10 +163,10 @@ function dealExportByUrl(url, id) {
     // https://cjhy-isv.isvjcloud.com/sign/signActivity2?activityId=
     if (url.indexOf("sign/signActivity") != -1 && url.indexOf("cjhy") != -1) {
         if ($.recordConSign.indexOf(id) == -1) {
-            id = id
+            id = 'cj_' + id
             $.conSignChange = true
             $.recordConSign += `&${id}`
-            return `export kdy_qd_custom=\"${id}\"`
+            return `export T_CON_SIGN_ID=\"${id}\"`
         }
     }
 
