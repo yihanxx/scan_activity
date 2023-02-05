@@ -1,5 +1,8 @@
 /*
-cron: 5 7-23/2 * * *  
+[task_local]
+# 签到活動扫描
+cron: 30 8-23/2 * * *  
+t_scan_sign_activity.js, tag=签到活動扫描, enabled=true
  */
 const $ = new Env('签到活动扫描');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -15,8 +18,10 @@ $.message = ""
 $.nextPage = 1
 $.pageNo = 0
 $.keyWord = '签到'
-$.ID = process.env.ID ? process.env.ID : "ID";
-$.packChange = false
+$.recordSign = process.env.RECORD_SIGN ? process.env.RECORD_SIGN : "RECORD_SIGN";
+$.signChange = false
+$.recordConSign = process.env.RECORD_CON_SIGN ? process.env.RECORD_CON_SIGN : "RECORD_CON_SIGN";
+$.signConChange = false
 let cookiesArr = [], cookie = '', message;
 let lz_jdpin_token_cookie = ''
 let activityCookie = ''
@@ -113,164 +118,61 @@ async function jdmodule() {
         console.log(`已获取第${$.pageNo}页内容，休息一下`)
         await $.wait(parseInt(Math.random() * 50000 + 1000, 10))
     }
+    if ($.signChange) {
+        await notify.sendNotify(`检测到七日签到变量变动`, `export RECORD_SIGN=\"${$.recordSign}\"`)
+    }
+    if ($.conSignChange) {
+        await notify.sendNotify(`检测到连续签到变量变动`, `export RECORD_CON_SIGN=\"${$.recordConSign}\"`)
+    }
 }
 
 function dealExportByUrl(url, id) {
-    // 购物车锦鲤
-    if (url.indexOf("wxCartKoi/cartkoi") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.koiChange = true
-            $.ID += `&${id}`
-            return `export jd_wxCartKoi_activityId=\"${id}\"`
-        }
-    }
-    // 拆福袋
-    else if (url.indexOf("wxUnPackingActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.packChange = true
-            $.ID += `&${id}`
-            return `export jd_wxUnPackingActivity_activityId=\"${url}\"`
-        }
-    }
-    // 粉丝互动
-    else if (url.indexOf("wxFansInterActionActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.fansChange = true
-            $.ID += `&${id}`
-            return `export kdy_fshd_custom=\"${id}\"`
-        }
-
-    }
-    // 读秒
-    else if (url.indexOf("wxSecond") != -1) {
-        return `export kdy_pss_custom=\"${id}\"`
-    }
-    // 分享有礼
-    else if (url.indexOf("wxShareActivity") != -1) {
-        return `export kdy_fxyl_custom=\"${id}\"`
-    }
-    // 中心抽奖
-    else if (url.indexOf("drawCenter") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.centerChange = true
-            $.ID += `&${id}`
-            return `export jd_drawCenter_activityId=\"${id}\"`
-        }
-
-    }
-    // 店铺关注有礼
-    else if (url.indexOf("wxShopFollowActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 加购有礼
-    else if (url.indexOf("wxCollectionActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
     // 七日签到
-    else if (url.indexOf("sevenDay") != -1) {
-        if ($.ID.indexOf(id) == -1) {
+    // https://lzkj-isv.isvjcloud.com/sign/sevenDay/signActivity?activityId=
+    if (url.indexOf("sevenDay") != -1 && url.indexOf("lzkj") != -1) {
+        if ($.recordSign.indexOf(id) == -1) {
             $.signChange = true
-            $.ID += `&${id}`
-            url = uel.split("&")[0]
-            return `${url}`
+            $.recordSign += `&${id}`
+            return `export T_SEVENDAY_SIGN_ID=\"${id}\"`
         }
     }
-    // 互动游戏
-    else if (url.indexOf("wxGameActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 打豆豆
-    else if (url.indexOf("wxgame") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 盖楼有礼
-    else if (url.indexOf("wxBuildActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 组队瓜分
-    else if (url.indexOf("wxTeam") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 集卡有礼
-    else if (url.indexOf("wxCollectCard") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 幸运抽奖
-    else if (url.indexOf("wxDrawActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 幸运抽奖
-    else if (url.indexOf("lzclient") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
+
     // 七日签到
-    else if (url.indexOf("sevenDay") != -1) {
-        if ($.ID.indexOf(id) == -1) {
+    // https://cjhy-isv.isvjcloud.com/sign/sevenDay/signActivity?activityId=
+    if (url.indexOf("sevenDay") != -1 && url.indexOf("cjhy") != -1) {
+        if ($.recordSign.indexOf(id) == -1) {
+            id = 'cj_' + id
             $.signChange = true
-            $.ID += `&${id}`
-            url = uel.split("&")[0]
-            return `${url}`
-        }
-    }
-    // 积分兑换京豆
-    else if (url.indexOf("wxPointShopView") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.pointChange = true
-            $.ID += `&${id}`
-            venderId = ""
-            giftId = ""
-            prefix = url.split("?")[0]
-            arrays = url.split("&")
-            for (let it of arrays) {
-                if (it.indexOf(`venderId`) != -1) {
-                    venderId = it.split("venderId=")[1]
-                }
-                if (it.indexOf(`giftId`) != -1) {
-                    giftId = it.split("giftId=")[1]
-                }
-            }
-            return `export jfhd=\"${prefix}?venderId=${venderId}&giftId=${giftId}\"`
+            $.recordSign += `&${id}`
+            return `export T_SEVENDAY_SIGN_ID=\"${id}\"`
         }
 
-    } else {
-        return null
     }
+
+    // 连续签到
+    // https://lzkj-isv.isvjcloud.com/sign/signActivity2?activityId=
+    if (url.indexOf("sign/signActivity2") != -1 && url.indexOf("lzkj") != -1) {
+        if ($.recordConSign.indexOf(id) == -1) {
+            $.conSignChange = true
+            $.recordConSign += `&${id}`
+            return `export T_CON_SIGN_ID=\"${id}\"`
+        }
+    }
+
+    // 连续签到
+    // https://cjhy-isv.isvjcloud.com/sign/signActivity2?activityId=
+    if (url.indexOf("sign/signActivity") != -1 && url.indexOf("cjhy") != -1) {
+        if ($.recordConSign.indexOf(id) == -1) {
+            id = 'cj_' + id
+            $.conSignChange = true
+            $.recordConSign += `&${id}`
+            return `export T_CON_SIGN_ID=\"${id}\"`
+        }
+    }
+
+    return null
+
+
 }
 
 //运行
