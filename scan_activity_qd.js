@@ -119,10 +119,10 @@ async function jdmodule() {
         await $.wait(parseInt(Math.random() * 50000 + 1000, 10))
     }
     if ($.signChange) {
-        await notify.sendNotify(`检测到七日签到变量变动`, `export RECORD_SIGN=\"${$.recordSign}\"`)
+        await notify.sendNotify()
     }
     if ($.conSignChange) {
-        await notify.sendNotify(`检测到连续签到变量变动`, `export RECORD_CON_SIGN=\"${$.recordConSign}\"`)
+        await notify.sendNotify()
     }
 }
 
@@ -133,7 +133,7 @@ function dealExportByUrl(url, id) {
         if ($.recordSign.indexOf(id) == -1) {
             $.signChange = true
             $.recordSign += `&${id}`
-            return `export T_SEVENDAY_SIGN_ID=\"${id}\"`
+            return `export kdy_qd_custom=\"${id}\"`
         }
     }
 
@@ -144,7 +144,7 @@ function dealExportByUrl(url, id) {
             id = 'cj_' + id
             $.signChange = true
             $.recordSign += `&${id}`
-            return `export T_SEVENDAY_SIGN_ID=\"${id}\"`
+            return `export kdy_qd_custom=\"${id}\"`
         }
 
     }
@@ -155,7 +155,7 @@ function dealExportByUrl(url, id) {
         if ($.recordConSign.indexOf(id) == -1) {
             $.conSignChange = true
             $.recordConSign += `&${id}`
-            return `export T_CON_SIGN_ID=\"${id}\"`
+            return `export kdy_qd_custom=\"${id}\"`
         }
     }
 
@@ -166,7 +166,7 @@ function dealExportByUrl(url, id) {
             id = 'cj_' + id
             $.conSignChange = true
             $.recordConSign += `&${id}`
-            return `export T_CON_SIGN_ID=\"${id}\"`
+            return `export kdy_qd_custom=\"${id}\"`
         }
     }
 
