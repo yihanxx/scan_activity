@@ -119,10 +119,10 @@ async function jdmodule() {
         await $.wait(parseInt(Math.random() * 50000 + 1000, 10))
     }
     if ($.signChange) {
-        await notify.sendNotify(`检测到七日签到变量变动`, `export RECORD_SIGN=\"${$.recordSign}\"`)
+        await notify.sendNotify()
     }
     if ($.conSignChange) {
-        await notify.sendNotify(`检测到连续签到变量变动`, `export RECORD_CON_SIGN=\"${$.recordConSign}\"`)
+        await notify.sendNotify()
     }
 }
 
