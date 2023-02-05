@@ -8,8 +8,8 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = false; //是否关闭通知，false打开通知推送，true关闭通知推送
-$.rawId = process.env.T_CON_SIGN_ID ? process.env.T_CON_SIGN_ID : "";
-$.activityIds = process.env.T_CON_SIGN_IDS ? process.env.T_CON_SIGN_IDS : "";
+$.rawId = process.env.SIGN_ID ? process.env.SIGN_ID : "";
+$.activityIds = process.env.SIGN_IDS ? process.env.SIGN_IDS : "";
 $.Token = "";
 $.openCard = false
 $.exportActivityIds = ""
