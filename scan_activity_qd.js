@@ -141,7 +141,7 @@ function dealExportByUrl(url, id) {
     // https://cjhy-isv.isvjcloud.com/sign/sevenDay/signActivity?activityId=
     if (url.indexOf("sevenDay") != -1 && url.indexOf("cjhy") != -1) {
         if ($.recordSign.indexOf(id) == -1) {
-            id = 'cj_' + id
+            id = id
             $.signChange = true
             $.recordSign += `&${id}`
             return `export kdy_qd_custom=\"${id}\"`
@@ -163,7 +163,7 @@ function dealExportByUrl(url, id) {
     // https://cjhy-isv.isvjcloud.com/sign/signActivity2?activityId=
     if (url.indexOf("sign/signActivity") != -1 && url.indexOf("cjhy") != -1) {
         if ($.recordConSign.indexOf(id) == -1) {
-            id = 'cj_' + id
+            id = id
             $.conSignChange = true
             $.recordConSign += `&${id}`
             return `export SIGN_ID=\"${id}\"`
