@@ -155,7 +155,7 @@ function dealExportByUrl(url, id) {
         if ($.recordConSign.indexOf(id) == -1) {
             $.conSignChange = true
             $.recordConSign += `&${id}`
-            return `export SIGN_ID=\"${id}\"`
+            return `export kdy_qd_custom=\"${id}\"`
         }
     }
 
@@ -166,7 +166,7 @@ function dealExportByUrl(url, id) {
             id = id
             $.conSignChange = true
             $.recordConSign += `&${id}`
-            return `export SIGN_ID=\"${id}\"`
+            return `export kdy_qd_custom=\"${id}\"`
         }
     }
 
