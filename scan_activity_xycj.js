@@ -116,113 +116,6 @@ async function jdmodule() {
 }
 
 function dealExportByUrl(url, id) {
-    // 购物车锦鲤
-    if (url.indexOf("wxCartKoi/cartkoi") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.koiChange = true
-            $.ID += `&${id}`
-            return `export jd_wxCartKoi_activityId=\"${id}\"`
-        }
-    }
-    // 拆福袋
-    else if (url.indexOf("wxUnPackingActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.packChange = true
-            $.ID += `&${id}`
-            return `export jd_wxUnPackingActivity_activityId=\"${url}\"`
-        }
-    }
-    // 粉丝互动
-    else if (url.indexOf("wxFansInterActionActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.fansChange = true
-            $.ID += `&${id}`
-            return `export kdy_fshd_custom=\"${id}\"`
-        }
-
-    }
-    // 读秒
-    else if (url.indexOf("wxSecond") != -1) {
-        return `export kdy_pss_custom=\"${id}\"`
-    }
-    // 分享有礼
-    else if (url.indexOf("wxShareActivity") != -1) {
-        return `export kdy_fxyl_custom=\"${id}\"`
-    }
-    // 中心抽奖
-    else if (url.indexOf("drawCenter") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.centerChange = true
-            $.ID += `&${id}`
-            return `export jd_drawCenter_activityId=\"${id}\"`
-        }
-
-    }
-    // 店铺关注有礼
-    else if (url.indexOf("wxShopFollowActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 加购有礼
-    else if (url.indexOf("wxCollectionActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 七日签到
-    else if (url.indexOf("sevenDay") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.signChange = true
-            $.ID += `&${id}`
-            url = uel.split("&")[0]
-            return `${url}`
-        }
-    }
-    // 互动游戏
-    else if (url.indexOf("wxGameActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 打豆豆
-    else if (url.indexOf("wxgame") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 盖楼有礼
-    else if (url.indexOf("wxBuildActivity") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 组队瓜分
-    else if (url.indexOf("wxTeam") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 集卡有礼
-    else if (url.indexOf("wxCollectCard") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.followChange = true
-            $.ID += `&${id}`
-            return `${url}`
-        }
-    }
     // 幸运抽奖
     else if (url.indexOf("wxDrawActivity") != -1) {
         if ($.ID.indexOf(id) == -1) {
@@ -236,15 +129,6 @@ function dealExportByUrl(url, id) {
         if ($.ID.indexOf(id) == -1) {
             $.followChange = true
             $.ID += `&${id}`
-            return `${url}`
-        }
-    }
-    // 七日签到
-    else if (url.indexOf("sevenDay") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.signChange = true
-            $.ID += `&${id}`
-            url = uel.split("&")[0]
             return `${url}`
         }
     }
