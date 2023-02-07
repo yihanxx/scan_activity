@@ -116,16 +116,8 @@ async function jdmodule() {
 }
 
 function dealExportByUrl(url, id) {
-    // 购物车锦鲤
-    if (url.indexOf("wxCartKoi/cartkoi") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.koiChange = true
-            $.ID += `&${id}`
-            return `export jd_wxCartKoi_activityId=\"${id}\"`
-        }
-    }
     // 幸运抽奖
-    else if (url.indexOf("wxDrawActivity") != -1) {
+    if (url.indexOf("wxDrawActivity") != -1) {
         if ($.ID.indexOf(id) == -1) {
             $.followChange = true
             $.ID += `&${id}`
@@ -139,29 +131,6 @@ function dealExportByUrl(url, id) {
             $.ID += `&${id}`
             return `${url}`
         }
-    }
-    // 积分兑换京豆
-    else if (url.indexOf("wxPointShopView") != -1) {
-        if ($.ID.indexOf(id) == -1) {
-            $.pointChange = true
-            $.ID += `&${id}`
-            venderId = ""
-            giftId = ""
-            prefix = url.split("?")[0]
-            arrays = url.split("&")
-            for (let it of arrays) {
-                if (it.indexOf(`venderId`) != -1) {
-                    venderId = it.split("venderId=")[1]
-                }
-                if (it.indexOf(`giftId`) != -1) {
-                    giftId = it.split("giftId=")[1]
-                }
-            }
-            return `export jfhd=\"${prefix}?venderId=${venderId}&giftId=${giftId}\"`
-        }
-
-    } else {
-        return null
     }
 }
 
