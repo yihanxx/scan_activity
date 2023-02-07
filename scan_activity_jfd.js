@@ -1,7 +1,7 @@
 /*
 cron: 5 7-23/2 * * *  
  */
-const $ = new Env('积分兑换京豆活动扫描');
+const $ = new Env('豆活动扫描');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -14,7 +14,7 @@ $.exportActivityIds = ""
 $.message = ""
 $.nextPage = 1
 $.pageNo = 0
-$.keyWord = '积分兑'
+$.keyWord = '豆'
 $.ID = process.env.ID ? process.env.ID : "ID";
 $.packChange = false
 let cookiesArr = [], cookie = '', message;
