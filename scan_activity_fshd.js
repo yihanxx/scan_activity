@@ -123,6 +123,7 @@ function dealExportByUrl(url, id) {
             $.ID += `&${id}`
             return `export kdy_fshd_custom=\"${id}\"`
         }
+    }
 }
 
 //运行
