@@ -116,6 +116,14 @@ async function jdmodule() {
 }
 
 function dealExportByUrl(url, id) {
+    // 购物车锦鲤
+    if (url.indexOf("wxCartKoi/cartkoi") != -1) {
+        if ($.ID.indexOf(id) == -1) {
+            $.koiChange = true
+            $.ID += `&${id}`
+            return `export jd_wxCartKoi_activityId=\"${id}\"`
+        }
+    }
     // 幸运抽奖
     else if (url.indexOf("wxDrawActivity") != -1) {
         if ($.ID.indexOf(id) == -1) {
